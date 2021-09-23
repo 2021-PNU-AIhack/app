@@ -21,20 +21,38 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
+        supportActionBar!!.hide()
 
-        val userId = intent.getStringExtra("user_id")
-        val emailId = intent.getStringExtra("email_id")
+//        val userId = intent.getStringExtra("user_id")
+//        val emailId = intent.getStringExtra("email_id")
+//
+//        tv_user_id.text = "User ID :: $userId"
+//        tv_email_id.text = "Email ID :: $emailId"
+//
+//        btn_logout.setOnClickListener{
+//            FirebaseAuth.getInstance().signOut()
+//
+//            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+//            finish()
+//        }
 
-        tv_user_id.text = "User ID :: $userId"
-        tv_email_id.text = "Email ID :: $emailId"
+        bn.setOnNavigationItemSelectedListener {
+            replaceFragment(
+                when (it.itemId) {
+                    R.id.home -> FragmentOne()
+                    else -> FragmentTwo()
 
-        btn_logout.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-
-            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-            finish()
+                }
+            )
+            true
         }
 
+        bottomNavigationView.background = null
+        bottomNavigationView.menu.getItem(1).isEnabled = false
+    }
+    override fun onResume() {
+        super.onResume()
         bn.setOnNavigationItemSelectedListener {
             replaceFragment(
                 when (it.itemId) {

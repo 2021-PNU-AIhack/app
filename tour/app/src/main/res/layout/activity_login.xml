@@ -94,7 +94,7 @@
         android:background="@color/colorAccent"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
-        android:text="Login"
+        android:text="로그인"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
