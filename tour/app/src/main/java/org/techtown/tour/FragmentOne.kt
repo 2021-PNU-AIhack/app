@@ -1,10 +1,12 @@
 package org.techtown.tour
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +23,8 @@ class FragmentOne : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var v : View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +38,16 @@ class FragmentOne : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_one, container, false)
+        v = inflater.inflate(R.layout.fragment_one,container,false)
+
+        var searchView = v.findViewById<View>(R.id.search_bar1)
+        var settingBtn = searchView.findViewById<ImageView>(R.id.setting)
+
+        settingBtn.setOnClickListener {
+            var settingIntent: Intent = Intent(context, SettingActivity::class.java)
+            startActivity(settingIntent)
+        }
+        return v
     }
 
     companion object {
