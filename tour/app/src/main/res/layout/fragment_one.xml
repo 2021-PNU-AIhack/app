@@ -32,36 +32,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ratingBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_margin="20dp"
+            android:backgroundTint="@null"
+            android:text="여행지 평점 작성"
+            android:textColor="#5CC485"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/seasonMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="계절" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/themeMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="테마" />
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:ignore="MissingConstraints">-->
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/memberMenu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="구성원" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/seasonMenu"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="계절" />-->
 
-        </LinearLayout>
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/themeMenu"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="테마" />-->
+
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/memberMenu"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="구성원" />-->
+
+<!--        </LinearLayout>-->
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
