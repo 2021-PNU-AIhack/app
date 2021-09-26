@@ -73,13 +73,14 @@ class FragmentOne : Fragment() {
         var searchView = v.findViewById<View>(R.id.search_bar1)
         var settingBtn = searchView.findViewById<ImageView>(R.id.setting)
         var recoBtn = v.findViewById<Button>(R.id.recommendBtn)
+        var rateBtn = v.findViewById<Button>(R.id.ratingBtn)
 
         displayList.clear()
         cardList.clear()
         fillTourData()
 
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
-        var layoutManager = LinearLayoutManager(context)
+//        var layoutManager = LinearLayoutManager(context)
 //        recyclerView.layoutManager = layoutManager
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         recyclerView.setHasFixedSize(true)
@@ -94,8 +95,13 @@ class FragmentOne : Fragment() {
         }
 
         recoBtn.setOnClickListener {
-            var recommendIntent: Intent = Intent(context, RecommendActivity::class.java)
+            var recommendIntent: Intent = Intent(context, GetInfoActivity::class.java)
             startActivity(recommendIntent)
+        }
+
+        rateBtn.setOnClickListener {
+            var rateIntent: Intent = Intent(context, RateActivity::class.java)
+            startActivity(rateIntent)
         }
 
         return v
