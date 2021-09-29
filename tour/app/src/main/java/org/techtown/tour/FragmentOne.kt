@@ -3,6 +3,8 @@ package org.techtown.tour
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +18,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.inject.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.techtown.tour.FragmentOne.Companion.pos
+import java.io.IOException
+import java.net.URL
 import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -168,7 +177,7 @@ class MyAdapter(val context: Context, var spotList: ArrayList<TourData>): Recycl
     }
 
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
-        var itemtitle: TextView = itemview.findViewById(R.id.item_title)
+        var itemimage: ImageView = itemview.findViewById(R.id.item_image)
         var itemdetail: TextView = itemview.findViewById(R.id.item_detail)
 
         fun bind (spotData:TourData, context: Context) {
@@ -179,9 +188,35 @@ class MyAdapter(val context: Context, var spotList: ArrayList<TourData>): Recycl
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context.startActivity(this) }
             }
-            itemtitle.text = spotData.spotName
+
+//            val urlImage: URL = URL("https://images.pexels.com/photos/954129/" +
+//                    "pexels-photo-954129.jpeg?" +
+//                    "auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260")
+
+            val urlImage: URL = URL("https://www.visitbusan.net/uploadImgs/files/cntnts/20191229160529389_ttiel")
+
+            // async task to get bitmap from url
+            val result: kotlinx.coroutines.Deferred<Bitmap?> = GlobalScope.async {
+                urlImage.toBitmap()
+            }
+
+            GlobalScope.launch(Dispatchers.Main) {
+                // show bitmap on image view when available
+                itemimage.setImageBitmap(result.await())
+            }
+
+//            itemtitle.text = spotData.spotName
             itemdetail.text = spotData.category
         }
+    }
+}
+
+// extension function to get bitmap from url
+fun URL.toBitmap(): Bitmap?{
+    return try {
+        BitmapFactory.decodeStream(openStream())
+    }catch (e: IOException){
+        null
     }
 }
 
