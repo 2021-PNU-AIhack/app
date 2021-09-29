@@ -46,10 +46,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_spot"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/oneEdit"
+
+
+    <Spinner
+        android:id="@+id/spinner_1"
         android:layout_width="203dp"
         android:layout_height="44dp"
+        android:entries="@array/location"
         android:layout_marginStart="20dp"
         android:layout_marginTop="84dp"
         android:layout_weight="3"
@@ -59,7 +62,8 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_one"
         app:layout_constraintTop_toBottomOf="@+id/tv_spot"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+    />
 
     <RatingBar
         android:id="@+id/ratingBar_one"
@@ -72,7 +76,7 @@
         android:numStars="5"
         android:rating="2.5"
         android:stepSize="0.5"
-        app:layout_constraintStart_toEndOf="@+id/oneEdit"
+        app:layout_constraintStart_toEndOf="@+id/spinner_1"
         app:layout_constraintTop_toBottomOf="@+id/tv_rate"
         tools:ignore="MissingConstraints" />
 
@@ -89,10 +93,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_one"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/twoEdit"
+    <Spinner
+        android:id="@+id/spinner_2"
         android:layout_width="203dp"
         android:layout_height="44dp"
+        android:entries="@array/location"
         android:layout_marginStart="20dp"
         android:layout_marginTop="84dp"
         android:layout_weight="3"
@@ -101,7 +106,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_two"
-        app:layout_constraintTop_toBottomOf="@+id/oneEdit"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_1"
         tools:ignore="MissingConstraints" />
 
     <RatingBar
@@ -115,7 +120,7 @@
         android:numStars="5"
         android:rating="2.5"
         android:stepSize="0.5"
-        app:layout_constraintStart_toEndOf="@+id/twoEdit"
+        app:layout_constraintStart_toEndOf="@+id/spinner_2"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar_one"
         tools:ignore="MissingConstraints" />
 
@@ -132,10 +137,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_two"
         tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/threeEdit"
+    <Spinner
+        android:id="@+id/spinner_3"
         android:layout_width="203dp"
         android:layout_height="44dp"
+        android:entries="@array/location"
         android:layout_marginStart="20dp"
         android:layout_marginTop="84dp"
         android:layout_weight="3"
@@ -144,7 +150,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_three"
-        app:layout_constraintTop_toBottomOf="@+id/twoEdit"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_2"
         tools:ignore="MissingConstraints" />
 
     <RatingBar
@@ -158,7 +164,7 @@
         android:numStars="5"
         android:rating="2.5"
         android:stepSize="0.5"
-        app:layout_constraintStart_toEndOf="@+id/threeEdit"
+        app:layout_constraintStart_toEndOf="@+id/spinner_3"
         app:layout_constraintTop_toBottomOf="@+id/ratingBar_two"
         tools:ignore="MissingConstraints" />
 
