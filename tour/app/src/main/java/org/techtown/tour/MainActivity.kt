@@ -18,13 +18,18 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.bottomNavigationView)
     }
 
+    companion object {
+        lateinit var userId : String
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
         supportActionBar!!.hide()
 
-//        val userId = intent.getStringExtra("user_id")
+        userId = intent.getStringExtra("user_id").toString()
 //        val emailId = intent.getStringExtra("email_id")
 //
 //        tv_user_id.text = "User ID :: $userId"
