@@ -2,6 +2,7 @@ package org.techtown.tour
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -11,6 +12,8 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import org.techtown.tour.databinding.ActivityMainBinding
 import org.techtown.tour.databinding.ActivityRateBinding
+import kotlinx.android.synthetic.main.activity_rate.*
+
 
 class RateActivity : AppCompatActivity() {
 
@@ -20,6 +23,7 @@ class RateActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
