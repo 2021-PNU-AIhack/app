@@ -80,4 +80,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // retorfit
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1' // Logger Library
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0' // Json을 받아와 자동으로 객체로 Convert
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0' // Retrofit Library
 }
