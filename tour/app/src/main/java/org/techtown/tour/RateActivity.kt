@@ -27,7 +27,7 @@ class RateActivity : AppCompatActivity() {
         binding = ActivityRateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        option = findViewById(R.id.spinner_1) as Spinner
+        option = findViewById<Spinner>(R.id.spinner_1)
 
 
         //val btn = findViewById<Button>(R.id.Btn) as Button
