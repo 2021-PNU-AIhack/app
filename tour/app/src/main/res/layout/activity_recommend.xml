@@ -41,6 +41,7 @@
             android:id="@+id/textView44"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="이하 4개의 여행지를 추천합니다."
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -69,6 +70,7 @@
         </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
+
 
 
 </FrameLayout>

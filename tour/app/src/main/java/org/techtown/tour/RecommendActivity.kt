@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,10 +22,6 @@ class RecommendActivity : AppCompatActivity() {
     var spots = arrayOf("1", "2","3","4")
     var categorys = arrayOf("5", "6", "7", "8")
 
-    //////
-
-    /////
-
 //    val api = APIS.create();
     private lateinit var retrofit : Retrofit
     private lateinit var supplementService : RetrofitService
@@ -34,8 +29,6 @@ class RecommendActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommend)
-
-        //tv.setText("dd")
 
         displayList.clear()
         FragmentOne.cardList.clear()
@@ -53,7 +46,7 @@ class RecommendActivity : AppCompatActivity() {
 
         var testView1 = findViewById<TextView>(R.id.textView22)
         var testView2 = findViewById<TextView>(R.id.textView33)
-        //var testView3 = findViewById<TextView>(R.id.textView44)
+        var testView3 = findViewById<TextView>(R.id.textView44)
 
 
         var getWhoCnt = intent.getIntExtra("whoCnt", 0)
@@ -108,7 +101,7 @@ class RecommendActivity : AppCompatActivity() {
 
         testView1.text = str1
         testView2.text = str2
-        //testView3.text = str3
+        testView3.text = str3
 
         retrofit = RetrofitClient.getInstance() // retrofit 초기화
         supplementService = retrofit.create(RetrofitService::class.java) // 서비스 가져오기
@@ -163,35 +156,21 @@ class RecommendActivity : AppCompatActivity() {
 //            }
 //        })
 
-
-
     }
 
     private fun getSearchList(service: RetrofitService){
-
-        var testView3 = findViewById<TextView>(R.id.textView44)
-
-        service.requestList("광안리해수욕장",3,"감천문화마을",4,"청사포",3).enqueue(object : Callback<List<DataModels>> {
-            override fun onFailure(call: Call<List<DataModels>>, error: Throwable) {
+        service.requestList("광안리해수욕장",3,"감천문화마을",4,"청사포",3).enqueue(object : Callback<SpotArr> {
+            override fun onFailure(call: Call<SpotArr>, error: Throwable) {
                 Log.d("TAG", "실패 원인: {$error}")
-                testView3.text = "result : d"
             }
 
             override fun onResponse(
-                call: Call<List<DataModels>>,
-                response: Response<List<DataModels>>
+                call: Call<SpotArr>,
+                response: Response<SpotArr>
             ) {
                 Log.d("PLZZZZZZZZZZZZZZ", response.body().toString())
-                var data : List<DataModels>? = response.body()
 
-                for(i in 0..10) {
-
-                    var pred_spots: String = data?.get(i)?.getspots()!!
-                    var pred_ratings: String = data?.get(i)?.getratings()!!
-
-                    testView3.append("$pred_spots and  $pred_ratings \n")
-                    //reponse.body()는 PlayerList를 반환한다.
-                }
+                //reponse.body()는 PlayerList를 반환한다.
             }
         })
     }
