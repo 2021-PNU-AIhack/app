@@ -29,6 +29,24 @@
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mapBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@null"
+            android:text="지도 보기"
+            android:textColor="#5CC485" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nearSpotBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@null"
+            android:text="근처 추천 여행지"
+            android:textColor="#5CC485" />
+
         <TextView
             android:id="@+id/spot_name"
             android:layout_width="wrap_content"
@@ -38,6 +56,7 @@
             android:id="@+id/spot_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 
