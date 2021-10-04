@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RateActivity">
+
+
+    <TextView
+        android:id="@+id/tv_spot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="68dp"
+        android:text="관광지명"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="72dp"
+        android:text="평점"
+        android:textSize="35dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_spot"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="84dp"
+        android:text="1"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_spot"
+        tools:ignore="MissingConstraints" />
+
+
+
+    <Spinner
+        android:id="@+id/spinner_1"
+        android:layout_width="203dp"
+        android:layout_height="44dp"
+        android:entries="@array/location"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="3"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_one"
+        app:layout_constraintTop_toBottomOf="@+id/tv_spot"
+        tools:ignore="MissingConstraints"
+    />
+
+    <RatingBar
+        android:id="@+id/ratingBar_one"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="2.5"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/spinner_1"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rate"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="76dp"
+        android:text="2"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_one"
+        tools:ignore="MissingConstraints" />
+
+    <Spinner
+        android:id="@+id/spinner_2"
+        android:layout_width="203dp"
+        android:layout_height="44dp"
+        android:entries="@array/location"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="3"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_two"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_1"
+        tools:ignore="MissingConstraints" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_two"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="120dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="2.5"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/spinner_2"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_one"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="80dp"
+        android:text="3"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_two"
+        tools:ignore="MissingConstraints" />
+
+    <Spinner
+        android:id="@+id/spinner_3"
+        android:layout_width="203dp"
+        android:layout_height="44dp"
+        android:entries="@array/location"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="3"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_three"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_2"
+        tools:ignore="MissingConstraints" />
+
+    <RatingBar
+        android:id="@+id/ratingBar_three"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="120dp"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="2.5"
+        android:stepSize="0.5"
+        app:layout_constraintStart_toEndOf="@+id/spinner_3"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar_two"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Btn"
+        android:layout_width="183dp"
+        android:layout_height="61dp"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="108dp"
+        android:backgroundTint="@null"
+        android:text="입력"
+        android:textColor="#5CC485"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

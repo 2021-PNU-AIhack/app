@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="location">
+        <item value="0">----------</item>
+        <item>가덕도 연대봉</item>
+        <item>감천문화마을</item>
+        <item>광안리해수욕장</item>
+        <item>구덕문화공원</item>
+        <item>금강공원</item>
+        <item>누리마루 APEC하우스</item>
+        <item>다대포해수욕장</item>
+        <item>대신공원</item>
+        <item>대저생태공원</item>
+        <item>동래시장</item>
+        <item>몰운대 (부산 국가지질공원)</item>
+        <item>민락수변공원</item>
+        <item>백양산 (부산 국가지질공원)</item>
+        <item>봉래산</item>
+        <item>부산기상관측소</item>
+        <item>부산시민공원</item>
+        <item>부산어촌민속관</item>
+        <item>부산해양자연사박물관</item>
+        <item>삼락생태공원</item>
+        <item>성지곡수원지</item>
+        <item>송도해수욕장</item>
+        <item>송정해수욕장</item>
+        <item>수산과학관</item>
+        <item>수영사적공원</item>
+        <item>승학산</item>
+        <item>아미산 전망대</item>
+        <item>아홉산숲</item>
+        <item>암남공원</item>
+        <item>어린이대공원</item>
+        <item>오륙도 (부산 국가지질공원)</item>
+        <item>요산문학관</item>
+        <item>용두산공원</item>
+        <item>용소웰빙공원</item>
+        <item>우장춘기념관</item>
+        <item>을숙도생태공원</item>
+        <item>일광해수욕장 데크길</item>
+        <item>일광해수욕장</item>
+        <item>임랑해수욕장</item>
+        <item>조선통신사역사관</item>
+        <item>청사포</item>
+        <item>태종대 (부산 국가지질공원)</item>
+        <item>해운대시장</item>
+        <item>화명생태공원</item>
+        <item>황령산 전망대</item>
+        <item>회동수원지</item>
+        <item>흰여울문화마을</item>
+    </string-array>
+</resources>
