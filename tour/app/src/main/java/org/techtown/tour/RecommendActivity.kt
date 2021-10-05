@@ -17,7 +17,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.ArrayList
-import kotlinx.coroutines.delay as delay1
 
 class RecommendActivity : AppCompatActivity() {
 
@@ -42,7 +41,7 @@ class RecommendActivity : AppCompatActivity() {
     var str2 : String = ""
     var str3 : String = ""
 
-//    val api = APIS.create();
+    //    val api = APIS.create();
     private lateinit var retrofit : Retrofit
     private lateinit var supplementService : RetrofitService
 
@@ -72,8 +71,6 @@ class RecommendActivity : AppCompatActivity() {
                     intent.getStringExtra("who$i")?.let { Log.d("checkkk", it) }
                 }
             }
-//            str1 += intent.getStringExtra("who${getWhoCnt-1}")
-//            intent.getStringExtra("who${getWhoCnt-1}")?.let { Log.d("checkkk", it) }
         }
 
         if(getSeasonCnt > 0) {
@@ -84,9 +81,6 @@ class RecommendActivity : AppCompatActivity() {
                     intent.getStringExtra("season$i")?.let { Log.d("checkkk", it) }
                 }
             }
-//            str2 += intent.getStringExtra("season${getSeasonCnt-1}")
-//            intent.getStringExtra("season${getSeasonCnt-1}")?.let { Log.d("checkkk", it) }
-
         }
 
         if(getStyleCnt > 0) {
@@ -98,13 +92,9 @@ class RecommendActivity : AppCompatActivity() {
                     Log.d("checkk style","$i $temp")
                 }
             }
-          //  str3 += intent.getStringExtra("style${getStyleCnt-1}")
-          //  intent.getStringExtra("style${getStyleCnt-1}")?.let { Log.d("checkkk", it) }
         }
 
-        testView1.text = str1
-        testView2.text = str2
-        testView2.append("and $str3")
+
 
 
         retrofit = RetrofitClient.getInstance() // retrofit 초기화
@@ -117,8 +107,7 @@ class RecommendActivity : AppCompatActivity() {
         fillTourData()
 
         var recyclerView = findViewById<RecyclerView>(R.id.recyclerview_recommend) // recyclerview id
-//        var layoutManager = LinearLayoutManager(context)
-//        recyclerView.layoutManager = layoutManager
+
         recyclerView.layoutManager = GridLayoutManager(this, 2)
         recyclerView.setHasFixedSize(true)
         displayList.addAll(FragmentOne.cardList)
@@ -126,63 +115,14 @@ class RecommendActivity : AppCompatActivity() {
         var adapter = MyAdapter(this,displayList)
         recyclerView.adapter = adapter
 
-
-        // test 혼자
-//        api.get_recom().enqueue(object : Callback<SpotArr>{
-//            override fun onFailure(call: Call<SpotArr>, e: IOException) {}
-//            override fun onResponse(call: Call<SpotArr>, response: Response<SpotArr>) {
-//                val checkText : String = response.body()!!.toString()
-//
-//                Log.e("TEST1 ", checkText)
-//
-//                val jsonObject = JSONObject(checkText)
-//                val spots = jsonObject.getJSONArray("spots")
-//                val ratings = jsonObject.getJSONArray("ratings")
-//                for (i in 0 .. 20)
-//            }
-//        })
-
-
-//        val data = PostModel(binding.idedt.text.toString(),binding.pwdedt.text.toString(),binding.nickedt.text.toString())
-//        api.post_users(data).enqueue(object : Callback<PostResult> {
-//            override fun onResponse(call: Call<PostResult>, response: Response<PostResult>) {
-//                Log.d("log",response.toString())
-//                Log.d("log", response.body().toString())
-//                if(!response.body().toString().isEmpty())
-//                    binding.text.setText(response.body().toString());
-//            }
-//
-//            override fun onFailure(call: Call<PostResult>, t: Throwable) {
-//                // 실패
-//                Log.d("log",t.message.toString())
-//                Log.d("log","fail")
-//            }
-//        })
-//
-//        api.get_users().enqueue(object : Callback<HTTP_GET_Model> {
-//            override fun onResponse(call: Call<HTTP_GET_Model>, response: Response<HTTP_GET_Model>) {
-//                Log.d("log",response.toString())
-//                Log.d("log", response.body().toString())
-//                if(!response.body().toString().isEmpty())
-//                    binding.text.setText(response.body().toString());
-//            }
-//
-//            override fun onFailure(call: Call<HTTP_GET_Model>, t: Throwable) {
-//                // 실패
-//                Log.d("log",t.message.toString())
-//                Log.d("log","fail")
-//            }
-//        })
-
     }
 
     private fun getSearchList(service: RetrofitService) {
 
         var testView3 = findViewById<TextView>(R.id.textView44)
-
+        var recommend_list =  ArrayList<String>()
         myRef.get().addOnSuccessListener {
-//            Log.d("http", "yes")
-//
+
             spots1 = it.child(MainActivity.userId).child("location1").value.toString()
             spots2 = it.child(MainActivity.userId).child("location2").value.toString()
             spots3 = it.child(MainActivity.userId).child("location3").value.toString()
@@ -211,7 +151,23 @@ class RecommendActivity : AppCompatActivity() {
 //            spots2 = "몰운대 (부산 국가지질공원)"
 //            ratings2 = "3.5"
 //            spots3 = "일광해수욕장"
-//            ratings3 = "3"
+//            ratings3 = "3".addOnFailureListener{
+////            Log.e("firebase", "Error getting data", it)
+////
+////            spots1 = "용소웰빙공원"
+////            ratings1 = "2.5"
+////            spots2 = "몰운대 (부산 국가지질공원)"
+////            ratings2 = "3.5"
+////            spots3 = "일광해수욕장"
+////            ratings3 = "3"
+//            //  }
+////
+////        Log.d("reco", spots1)
+////        Log.d("reco", ratings1)
+////        Log.d("reco", spots2)
+////        Log.d("reco", ratings2)
+////        Log.d("reco", spots3)
+////        Log.d("reco", ratings3)
             //  }
 //
 //        Log.d("reco", spots1)
@@ -225,7 +181,7 @@ class RecommendActivity : AppCompatActivity() {
             Thread.sleep(1000L)
 
             //if(spots1.isNullOrEmpty() && spots2.isNullOrEmpty() && spots3.isNullOrEmpty() && ratings1.isNullOrEmpty()&& ratings2.isNullOrEmpty()&& ratings3.isNullOrEmpty()){
-                service.requestList(spots1,ratings1,spots2,ratings2,spots3,ratings3)
+            service.requestList(spots1,ratings1,spots2,ratings2,spots3,ratings3)
                 //service.requestList("용소웰빙공원", "3.5", "몰운대 (부산 국가지질공원)", "4.5", "일광해수욕장", "4")
                 .enqueue(object : Callback<List<DataModels>> {
                     override fun onFailure(call: Call<List<DataModels>>, error: Throwable) {
@@ -239,7 +195,9 @@ class RecommendActivity : AppCompatActivity() {
                     ) {
                         Log.d("PLZZZZZZZZZZZZZZ", response.body().toString())
                         var data: List<DataModels>? = response.body()
-                        var num: Int = 0
+                        //var num: Int = 0
+
+
                         //testView3.append("$spots1 \n")
 
                         for (i in 0..19) { // 0부터 19까지
@@ -266,9 +224,9 @@ class RecommendActivity : AppCompatActivity() {
                                             it.child("$j").child("IEM_NM").value.toString()
                                                 .contains("$str3")
                                         ) {
-                                            testView3.append("$pred_spots 추천\n")
-                                            num++
-                                            testView3.append("$num")
+                                            testView3.append("$pred_spots\n")
+                                            recommend_list.add("$pred_spots")
+
 
                                         }
 
@@ -277,6 +235,7 @@ class RecommendActivity : AppCompatActivity() {
                                 }
 
                             }
+
                             //testView3.append("$pred_spots and  $pred_ratings \n")
 
                             //reponse.body()는 PlayerList를 반환한다.
@@ -287,13 +246,16 @@ class RecommendActivity : AppCompatActivity() {
                 })
             //}
         }
+
+
+
     }
+
     fun fillTourData() {
         FragmentOne.resultList.clear()
         FragmentOne.cardList.clear()
         for(i in 0..3) {
             var spotName : String = "test"// spots[i]
-            var idx : String = "test"// categorys[i]
             var image_url : String = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
 
 //            FragmentOne.resultList.add(
@@ -307,7 +269,6 @@ class RecommendActivity : AppCompatActivity() {
             FragmentOne.cardList.add(
                 TourData(
                     spotName,
-                    idx,
                     image_url
                 )
             )

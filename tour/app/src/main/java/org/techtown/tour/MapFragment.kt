@@ -29,7 +29,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MapFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment(val name : String, val xy : LatLng) : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
@@ -55,15 +55,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 //        mMap.addMarker(MarkerOptions().position(marker).title("Marker LAB"))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(marker))
 
-        val myLocation = LatLng(35.230994, 129.082343)
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation))
+//        val myLocation = LatLng(35.230994, 129.082343)
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(xy))
         mMap.moveCamera(CameraUpdateFactory.zoomTo(15f))
 
         //마커 출력
         val marker = MarkerOptions()
-            .position(myLocation)
-            .title("Com")
-            .snippet("컴공관입니다.")
+            .position(xy)
+            .title(name)
+            .snippet(name)
         mMap?.addMarker(marker)
 
     }
