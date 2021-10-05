@@ -18,7 +18,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.inject.Deferred
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -43,7 +48,13 @@ class FragmentOne : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    val database = Firebase.database
+    val myRef = database.getReference("location")
+
     val displayList = ArrayList<TourData>()
+    var spotNameList = ArrayList<String>()
+    var idxList = ArrayList<String>()
+    var imageUrlList = ArrayList<String>()
     lateinit var v : View
     val spots = arrayOf("부산", "경상도","서울","대전","충청","강원도")
     val categorys = arrayOf("바다", "숙박", "볼거리", "교통", "느긋", "감자")
@@ -86,7 +97,112 @@ class FragmentOne : Fragment() {
 
         displayList.clear()
         cardList.clear()
-        fillTourData()
+
+//        myRef.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+////                val test = snapshot.child("sofa")
+//                Log.e("snap", "good")
+//                for(ds in snapshot.children){
+//                    ds.child("PLACE_NM").toString()
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                // 읽어오기에 실패했을 때
+//                Log.e("실패", "후")
+//            }
+//        })
+
+//        for (i in 1..46) {
+//            var spotName : String = "error"
+//            var idx : String = "errror"
+//            var image_url : String = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
+//
+//            cardList.add(
+//                TourData(
+//                    spotName,
+//                    idx,
+//                    image_url
+//                )
+//            )
+//        }
+
+//        myRef.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                Log.d("success", "yes")
+//                for (i in 1..46) {
+////                    var spotName : String = snapshot.child("$i").child("PLACE_NM").toString()
+////                    var idx : String = snapshot.child("$i").child("idx").toString()
+////                    var image_url : String = snapshot.child("$i").child("image").toString()
+//
+//                    cardList.add(
+//                        TourData(
+//                            snapshot.child("$i").child("PLACE_NM").toString(),
+//                            snapshot.child("$i").child("idx").toString(),
+//                            snapshot.child("$i").child("image").toString()
+//                        )
+//                    )
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                // 읽어오기에 실패했을 때
+//                Log.e("실패", "후")
+//
+//                for (i in 1..46) {
+//                    var spotName : String = "error"
+//                    var idx : String = "errror"
+//                    var image_url : String = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
+//
+//                    cardList.add(
+//                        TourData(
+//                            spotName,
+//                            idx,
+//                            image_url
+//                        )
+//                    )
+//                }
+//            }
+//        })
+
+        myRef.get().addOnSuccessListener {
+            Log.d("success", "yes")
+            for (i in 1..5) {
+                var spotName : String = it.child("$i").child("PLACE_NM").value.toString()
+                var idx : String = it.child("$i").child("idx").value.toString()
+                var image_url : String = it.child("$i").child("image").value.toString()
+
+                Log.d("success", "$spotName,  $idx,  $image_url")
+
+                cardList.add(
+                    TourData(
+                        spotName,
+                        idx,
+                        image_url
+                    )
+                )
+            }
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+
+            for (i in 1..5) {
+                var spotName : String = "error"
+                var idx : String = "errror"
+                var image_url : String = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
+
+                cardList.add(
+                    TourData(
+                        spotName,
+                        idx,
+                        image_url
+                    )
+                )
+            }
+        }
+
+//        displayList.clear()
+//        cardList.clear()
+//        fillTourData()
 
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
 //        var layoutManager = LinearLayoutManager(context)
@@ -119,26 +235,73 @@ class FragmentOne : Fragment() {
     fun fillTourData() {
         resultList.clear()
         cardList.clear()
-        for(i in 0..5) {
-            var spotName : String = spots[i]
-            var category : String = categorys[i]
+        for(i in 1..5) {
+//            lateinit var spotName : String // spots[i]
+//            lateinit var idx : String // categorys[i]
+//            lateinit var image_url : String
 
-                resultList.add(
-                    TourData(
-                        spotName,
-                        category,
-                    )
-                )
+            myRef.child("$i").child("PLACE_NM").get().addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                spotNameList.add(it.value.toString())
+//                spotName = it.value.toString()
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+                spotNameList.add("error")
+//                spotName = "error"
+            }
+
+            myRef.child("$i").child("idx").get().addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                idxList.add(it.value.toString())
+//                idx = it.value.toString()
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+                idxList.add("error")
+//                idx = "error"
+            }
+
+            myRef.child("$i").child("image").get().addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.value}")
+                imageUrlList.add(it.value.toString())
+//                image_url = it.value.toString()
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+                imageUrlList.add("http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg")
+//                image_url = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
+            }
+
+//                resultList.add(
+//                    TourData(
+//                        spotName,
+//                        idx,
+//                        image_url
+//                    )
+//                )
 
 
-                cardList.add(
-                    TourData(
-                        spotName,
-                        category
-                    )
-                )
+//                cardList.add(
+//                    TourData(
+//                        spotName,
+//                        idx,
+//                        image_url
+//                    )
+//                )
 
             }
+
+//            Log.d("plzzzzz",spotNameList.toString())
+//            Log.d("plzzzzz",idxList.toString())
+
+
+//            for (i in 0..4) {
+//                cardList.add(
+//                    TourData(
+//                        spotNameList[i],
+//                        idxList[i],
+//                        imageUrlList[i]
+//                    )
+//                )
+//            }
         }
 
 
@@ -193,7 +356,7 @@ class MyAdapter(val context: Context, var spotList: ArrayList<TourData>): Recycl
 //                    "pexels-photo-954129.jpeg?" +
 //                    "auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260")
 
-            val urlImage: URL = URL("https://www.visitbusan.net/uploadImgs/files/cntnts/20191229160529389_ttiel")
+            val urlImage: URL = URL(spotData.imageUrl)
 
             // async task to get bitmap from url
             val result: kotlinx.coroutines.Deferred<Bitmap?> = GlobalScope.async {
@@ -206,7 +369,7 @@ class MyAdapter(val context: Context, var spotList: ArrayList<TourData>): Recycl
             }
 
 //            itemtitle.text = spotData.spotName
-            itemdetail.text = spotData.category
+            itemdetail.text = spotData.spotName
         }
     }
 }

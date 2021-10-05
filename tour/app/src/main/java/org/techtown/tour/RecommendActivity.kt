@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,8 +21,18 @@ import java.util.ArrayList
 class RecommendActivity : AppCompatActivity() {
 
     val displayList = ArrayList<TourData>()
-    var spots = arrayOf("1", "2","3","4")
-    var categorys = arrayOf("5", "6", "7", "8")
+    val spots = ArrayList<String>()
+    val ratings = ArrayList<String>()
+
+    val database = Firebase.database
+    val myRef = database.getReference("user")
+
+    lateinit var spots1 : String
+    lateinit var ratings1 : String
+    lateinit var spots2 : String
+    lateinit var ratings2 : String
+    lateinit var spots3 : String
+    lateinit var ratings3 : String
 
 //    val api = APIS.create();
     private lateinit var retrofit : Retrofit
@@ -30,23 +42,9 @@ class RecommendActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommend)
 
-        displayList.clear()
-        FragmentOne.cardList.clear()
-        fillTourData()
-
-        var recyclerView = findViewById<RecyclerView>(R.id.recyclerview_recommend) // recyclerview id
-//        var layoutManager = LinearLayoutManager(context)
-//        recyclerView.layoutManager = layoutManager
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
-        recyclerView.setHasFixedSize(true)
-        displayList.addAll(FragmentOne.cardList)
-
-        var adapter = MyAdapter(this,displayList)
-        recyclerView.adapter = adapter
-
         var testView1 = findViewById<TextView>(R.id.textView22)
         var testView2 = findViewById<TextView>(R.id.textView33)
-        var testView3 = findViewById<TextView>(R.id.textView44)
+//        var testView3 = findViewById<TextView>(R.id.textView44)
 
 
         var getWhoCnt = intent.getIntExtra("whoCnt", 0)
@@ -99,14 +97,28 @@ class RecommendActivity : AppCompatActivity() {
 //            intent.getStringExtra("style${getStyleCnt-1}")?.let { Log.d("checkkk", it) }
         }
 
-        testView1.text = str1
-        testView2.text = str2
-        testView3.text = str3
+//        testView1.text = str1
+//        testView2.text = str2
+//        testView3.text = str3
 
         retrofit = RetrofitClient.getInstance() // retrofit 초기화
         supplementService = retrofit.create(RetrofitService::class.java) // 서비스 가져오기
 
         getSearchList(supplementService)
+
+        displayList.clear()
+        FragmentOne.cardList.clear()
+        fillTourData()
+
+        var recyclerView = findViewById<RecyclerView>(R.id.recyclerview_recommend) // recyclerview id
+//        var layoutManager = LinearLayoutManager(context)
+//        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.setHasFixedSize(true)
+        displayList.addAll(FragmentOne.cardList)
+
+        var adapter = MyAdapter(this,displayList)
+        recyclerView.adapter = adapter
 
 
         // test 혼자
@@ -159,18 +171,71 @@ class RecommendActivity : AppCompatActivity() {
     }
 
     private fun getSearchList(service: RetrofitService){
-        service.requestList("광안리해수욕장",3,"감천문화마을",4,"청사포",3).enqueue(object : Callback<SpotArr> {
-            override fun onFailure(call: Call<SpotArr>, error: Throwable) {
+
+        var testView3 = findViewById<TextView>(R.id.textView44)
+
+        myRef.get().addOnSuccessListener {
+            Log.d("http", "yes")
+
+            spots1 = it.child(MainActivity.userId).child("location1").value.toString()
+            spots2 = it.child(MainActivity.userId).child("location2").value.toString()
+            spots3 = it.child(MainActivity.userId).child("location3").value.toString()
+            ratings1 = it.child(MainActivity.userId).child("grade1").value.toString()
+            ratings2 = it.child(MainActivity.userId).child("grade2").value.toString()
+            ratings3 = it.child(MainActivity.userId).child("grade3").value.toString()
+
+            if (spots1 == "----------") {
+                spots1 = "용소웰빙공원"
+            }
+
+            if (spots2 == "----------") {
+                spots2 = "몰운대 (부산 국가지질공원)"
+            }
+
+            if (spots3 == "----------") {
+                spots3 = "일광해수욕장"
+            }
+
+
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+
+            spots1 = "용소웰빙공원"
+            ratings1 = "2.5"
+            spots2 = "몰운대 (부산 국가지질공원)"
+            ratings2 = "3.5"
+            spots3 = "일광해수욕장"
+            ratings3 = "3"
+        }
+
+        Log.d("reco", spots1)
+        Log.d("reco", ratings1)
+        Log.d("reco", spots2)
+        Log.d("reco", ratings2)
+        Log.d("reco", spots3)
+        Log.d("reco", ratings3)
+
+        service.requestList(spots1,ratings1,spots2,ratings2, spots3,ratings3).enqueue(object : Callback<List<DataModels>> {
+            override fun onFailure(call: Call<List<DataModels>>, error: Throwable) {
                 Log.d("TAG", "실패 원인: {$error}")
+                testView3.text = "result : d"
             }
 
             override fun onResponse(
-                call: Call<SpotArr>,
-                response: Response<SpotArr>
+                call: Call<List<DataModels>>,
+                response: Response<List<DataModels>>
             ) {
                 Log.d("PLZZZZZZZZZZZZZZ", response.body().toString())
+                var data : List<DataModels>? = response.body()
 
-                //reponse.body()는 PlayerList를 반환한다.
+                for(i in 0..10) {
+
+                    var pred_spots: String = data?.get(i)?.getspots()!!
+                    var pred_ratings: String = data?.get(i)?.getratings()!!
+
+//                    testView3.append("$pred_spots and  $pred_ratings \n")
+                    //reponse.body()는 PlayerList를 반환한다.
+                }
             }
         })
     }
@@ -179,21 +244,23 @@ class RecommendActivity : AppCompatActivity() {
         FragmentOne.resultList.clear()
         FragmentOne.cardList.clear()
         for(i in 0..3) {
-            var spotName : String = spots[i]
-            var category : String = categorys[i]
+            var spotName : String = "test"// spots[i]
+            var idx : String = "test"// categorys[i]
+            var image_url : String = "http://tong.visitkorea.or.kr/cms/resource/95/2675495_image2_1.jpg"
 
-            FragmentOne.resultList.add(
-                TourData(
-                    spotName,
-                    category,
-                )
-            )
+//            FragmentOne.resultList.add(
+//                TourData(
+//                    spotName,
+//                    category,
+//                )
+//            )
 
 
             FragmentOne.cardList.add(
                 TourData(
                     spotName,
-                    category
+                    idx,
+                    image_url
                 )
             )
 

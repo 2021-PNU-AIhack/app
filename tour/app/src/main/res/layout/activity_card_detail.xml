@@ -15,16 +15,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/spot_image"
-                android:layout_width="205dp"
+                android:layout_width="match_parent"
                 android:layout_height="205dp" />
 
             <ImageView
                 android:id="@+id/word_image"
-                android:layout_width="205dp"
+                android:layout_width="match_parent"
                 android:layout_height="205dp" />
 
         </LinearLayout>

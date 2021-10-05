@@ -64,6 +64,12 @@ class CardDetailActivity : AppCompatActivity() {
             }
         })
 
+//        myRef.child("1").child("PLACE_NM").get().addOnSuccessListener {
+//            Log.i("firebase", "Got value ${it.value}")
+//        }.addOnFailureListener{
+//            Log.e("firebase", "Error getting data", it)
+//        }
+
         mapBtn.setOnClickListener {
             val mapIntent: Intent = Intent(this, MapActivity::class.java)
             startActivity(mapIntent)
