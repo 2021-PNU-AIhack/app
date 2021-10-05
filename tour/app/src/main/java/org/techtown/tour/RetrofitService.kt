@@ -17,5 +17,4 @@ interface RetrofitService {
         @Query("spot_k") spot_k: String,
         @Query("rating_k") rating_k: String
     ) : Call<List<DataModels>>
-
 }
