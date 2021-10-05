@@ -17,6 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.ArrayList
+import kotlinx.coroutines.delay as delay1
 
 class RecommendActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class RecommendActivity : AppCompatActivity() {
 
     val database = Firebase.database
     val myRef = database.getReference("user")
+    val myRef2 = database.getReference("location")
 
     lateinit var spots1 : String
     lateinit var ratings1 : String
@@ -33,6 +35,12 @@ class RecommendActivity : AppCompatActivity() {
     lateinit var ratings2 : String
     lateinit var spots3 : String
     lateinit var ratings3 : String
+
+    lateinit var spot_name : String
+
+    var str1 : String = ""
+    var str2 : String = ""
+    var str3 : String = ""
 
 //    val api = APIS.create();
     private lateinit var retrofit : Retrofit
@@ -51,9 +59,6 @@ class RecommendActivity : AppCompatActivity() {
         var getSeasonCnt = intent.getIntExtra("seasonCnt", 0)
         var getStyleCnt = intent.getIntExtra("styleCnt", 0)
 
-        var str1 = ""
-        var str2 = ""
-        var str3 = ""
 
         Log.d("checkkkwhocnt", getWhoCnt.toString())
         Log.d("checkkkseacnt", getSeasonCnt.toString())
@@ -93,13 +98,14 @@ class RecommendActivity : AppCompatActivity() {
                     Log.d("checkk style","$i $temp")
                 }
             }
-//            str3 += intent.getStringExtra("style${getStyleCnt-1}")
-//            intent.getStringExtra("style${getStyleCnt-1}")?.let { Log.d("checkkk", it) }
+          //  str3 += intent.getStringExtra("style${getStyleCnt-1}")
+          //  intent.getStringExtra("style${getStyleCnt-1}")?.let { Log.d("checkkk", it) }
         }
 
-//        testView1.text = str1
-//        testView2.text = str2
-//        testView3.text = str3
+        testView1.text = str1
+        testView2.text = str2
+        testView2.append("and $str3")
+
 
         retrofit = RetrofitClient.getInstance() // retrofit 초기화
         supplementService = retrofit.create(RetrofitService::class.java) // 서비스 가져오기
@@ -170,13 +176,13 @@ class RecommendActivity : AppCompatActivity() {
 
     }
 
-    private fun getSearchList(service: RetrofitService){
+    private fun getSearchList(service: RetrofitService) {
 
         var testView3 = findViewById<TextView>(R.id.textView44)
 
         myRef.get().addOnSuccessListener {
-            Log.d("http", "yes")
-
+//            Log.d("http", "yes")
+//
             spots1 = it.child(MainActivity.userId).child("location1").value.toString()
             spots2 = it.child(MainActivity.userId).child("location2").value.toString()
             spots3 = it.child(MainActivity.userId).child("location3").value.toString()
@@ -184,62 +190,104 @@ class RecommendActivity : AppCompatActivity() {
             ratings2 = it.child(MainActivity.userId).child("grade2").value.toString()
             ratings3 = it.child(MainActivity.userId).child("grade3").value.toString()
 
-            if (spots1 == "----------") {
-                spots1 = "용소웰빙공원"
-            }
+//            if (spots1 == "----------") {
+//                spots1 = "용소웰빙공원"
+//            }
+//
+//            if (spots2 == "----------") {
+//                spots2 = "몰운대 (부산 국가지질공원)"
+//            }
+//
+//            if (spots3 == "----------") {
+//                spots3 = "일광해수욕장"
+//            }
+//
+//
+//        }.addOnFailureListener{
+//            Log.e("firebase", "Error getting data", it)
+//
+//            spots1 = "용소웰빙공원"
+//            ratings1 = "2.5"
+//            spots2 = "몰운대 (부산 국가지질공원)"
+//            ratings2 = "3.5"
+//            spots3 = "일광해수욕장"
+//            ratings3 = "3"
+            //  }
+//
+//        Log.d("reco", spots1)
+//        Log.d("reco", ratings1)
+//        Log.d("reco", spots2)
+//        Log.d("reco", ratings2)
+//        Log.d("reco", spots3)
+//        Log.d("reco", ratings3)
 
-            if (spots2 == "----------") {
-                spots2 = "몰운대 (부산 국가지질공원)"
-            }
+            //service.requestList(spots1,ratings1,spots2,ratings2, spots3,ratings3)
+            Thread.sleep(1000L)
 
-            if (spots3 == "----------") {
-                spots3 = "일광해수욕장"
-            }
+            //if(spots1.isNullOrEmpty() && spots2.isNullOrEmpty() && spots3.isNullOrEmpty() && ratings1.isNullOrEmpty()&& ratings2.isNullOrEmpty()&& ratings3.isNullOrEmpty()){
+                service.requestList(spots1,ratings1,spots2,ratings2,spots3,ratings3)
+                //service.requestList("용소웰빙공원", "3.5", "몰운대 (부산 국가지질공원)", "4.5", "일광해수욕장", "4")
+                .enqueue(object : Callback<List<DataModels>> {
+                    override fun onFailure(call: Call<List<DataModels>>, error: Throwable) {
+                        Log.d("TAG", "실패 원인: {$error}")
+                        testView3.text = "result : d"
+                    }
+
+                    override fun onResponse(
+                        call: Call<List<DataModels>>,
+                        response: Response<List<DataModels>>
+                    ) {
+                        Log.d("PLZZZZZZZZZZZZZZ", response.body().toString())
+                        var data: List<DataModels>? = response.body()
+                        var num: Int = 0
+                        //testView3.append("$spots1 \n")
+
+                        for (i in 0..19) { // 0부터 19까지
+
+                            var pred_spots: String = data?.get(i)?.getspots()!! // 모델에서 받아온 지역
+                            var pred_ratings: String = data?.get(i)?.getratings()!!
 
 
-        }.addOnFailureListener{
-            Log.e("firebase", "Error getting data", it)
+                            myRef2.get().addOnSuccessListener {
 
-            spots1 = "용소웰빙공원"
-            ratings1 = "2.5"
-            spots2 = "몰운대 (부산 국가지질공원)"
-            ratings2 = "3.5"
-            spots3 = "일광해수욕장"
-            ratings3 = "3"
+                                for (j in 1..46) {
+                                    spot_name =
+                                        it.child("$j")
+                                            .child("PLACE_NM").value.toString() // location 위치 기준
+                                    if (pred_spots == spot_name) {
+
+
+                                        if (it.child("$j").child("GRP_NM").value.toString()
+                                                .contains("$str1") &&
+                                            (it.child("$j").child("SEASON_NM").value.toString()
+                                                .contains("$str2") || it.child("$j")
+                                                .child("SEASON_NM").value.toString()
+                                                .contains("사계절")) &&
+                                            it.child("$j").child("IEM_NM").value.toString()
+                                                .contains("$str3")
+                                        ) {
+                                            testView3.append("$pred_spots 추천\n")
+                                            num++
+                                            testView3.append("$num")
+
+                                        }
+
+
+                                    }
+                                }
+
+                            }
+                            //testView3.append("$pred_spots and  $pred_ratings \n")
+
+                            //reponse.body()는 PlayerList를 반환한다.
+                        }
+
+
+                    }
+                })
+            //}
         }
-
-        Log.d("reco", spots1)
-        Log.d("reco", ratings1)
-        Log.d("reco", spots2)
-        Log.d("reco", ratings2)
-        Log.d("reco", spots3)
-        Log.d("reco", ratings3)
-
-        service.requestList(spots1,ratings1,spots2,ratings2, spots3,ratings3).enqueue(object : Callback<List<DataModels>> {
-            override fun onFailure(call: Call<List<DataModels>>, error: Throwable) {
-                Log.d("TAG", "실패 원인: {$error}")
-                testView3.text = "result : d"
-            }
-
-            override fun onResponse(
-                call: Call<List<DataModels>>,
-                response: Response<List<DataModels>>
-            ) {
-                Log.d("PLZZZZZZZZZZZZZZ", response.body().toString())
-                var data : List<DataModels>? = response.body()
-
-                for(i in 0..10) {
-
-                    var pred_spots: String = data?.get(i)?.getspots()!!
-                    var pred_ratings: String = data?.get(i)?.getratings()!!
-
-//                    testView3.append("$pred_spots and  $pred_ratings \n")
-                    //reponse.body()는 PlayerList를 반환한다.
-                }
-            }
-        })
     }
-
     fun fillTourData() {
         FragmentOne.resultList.clear()
         FragmentOne.cardList.clear()
