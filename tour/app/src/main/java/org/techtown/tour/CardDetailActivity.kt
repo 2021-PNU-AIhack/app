@@ -2,6 +2,7 @@ package org.techtown.tour
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.techtown.tour.databinding.ActivityRateBinding
+import java.io.IOException
+
 import java.net.URL
 import kotlin.properties.Delegates
 
@@ -31,7 +33,7 @@ class CardDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_card_detail)
 
         val spotImage : ImageView = findViewById(R.id.spot_image)
-//        val wordImage : ImageView = findViewById(R.id.word_image)
+        val wordImage : ImageView = findViewById(R.id.word_image)
         val spotNameTv : TextView = findViewById(R.id.spot_name)
         val spotDetailTv : TextView = findViewById(R.id.spot_detail)
         val mapBtn : Button = findViewById(R.id.mapBtn)
@@ -67,6 +69,17 @@ class CardDetailActivity : AppCompatActivity() {
             mapX = it.child(idx).child("TRRSRT_LA").value.toString()
             mapY = it.child(idx).child("TRRSRT_LO").value.toString()
 
+            val urlImage: URL = URL(it.child(idx).child("image2").value.toString())
+
+            val result: kotlinx.coroutines.Deferred<Bitmap?> = GlobalScope.async {
+                urlImage.toBitmap()
+            }
+
+            GlobalScope.launch(Dispatchers.Main) {
+                // show bitmap on image view when available
+                wordImage.setImageBitmap(result.await())
+            }
+
         }.addOnFailureListener{
             spotDetailTv.text = "error"
             mapX = "35.230994"
@@ -89,3 +102,4 @@ class CardDetailActivity : AppCompatActivity() {
 
     }
 }
+
