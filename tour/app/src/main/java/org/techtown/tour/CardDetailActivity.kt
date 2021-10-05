@@ -81,5 +81,4 @@ class CardDetailActivity : AppCompatActivity() {
         }
 
     }
-
 }
