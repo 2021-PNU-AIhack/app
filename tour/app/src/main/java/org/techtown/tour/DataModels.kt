@@ -25,9 +25,9 @@ data class PostResult(
     var result:String? = null
 )
 
-//data class SpotArr(
-//    var array: List<DataModels>
-//)
+data class SpotArr(
+    var array: List<DataModels>
+)
 
 class DataModels{
 
